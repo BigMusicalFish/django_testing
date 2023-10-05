@@ -3,10 +3,46 @@ from http import HTTPStatus
 from pytest_django.asserts import assertRedirects, assertFormError
 from django.urls import reverse
 
-from news.models import Comment
+from news.models import Comment, News
 from news.forms import BAD_WORDS, WARNING
 
 import pytest
+
+
+@pytest.fixture
+def author(django_user_model):
+    return django_user_model.objects.create(username='Автор')
+
+
+@pytest.fixture
+def author_client(author, client):
+    client.force_login(author)
+    return client
+
+
+@pytest.fixture
+def comment(author):
+    comment = Comment.objects.create(
+        text='Текст комментария',
+        author=author,
+    )
+    return comment
+
+
+@pytest.fixture
+def news(author):
+    comment = News.objects.create(
+        text='Текст новости',
+        author=author,
+    )
+    return comment
+
+
+@pytest.fixture
+def form_data():
+    return {
+        'text': 'Новый текст',
+    }
 
 
 def test_user_can_create_comment(author_client, author, form_data):

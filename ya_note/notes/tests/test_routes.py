@@ -46,7 +46,7 @@ class TestRoutes(TestCase):
             self.client.force_login(user)
             for name in ('notes:edit', 'notes:delete', 'notes:detail'):
                 with self.subTest(user=user, name=name):
-                    url = reverse(name, args=(self.id,))
+                    url = reverse(name, args=(self.slug,))
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, status)
 
@@ -55,7 +55,7 @@ class TestRoutes(TestCase):
         for name in ('notes:edit', 'notes:delete', 'notes:detail',
                      'notes:add', 'notes:list', 'notes:success'):
             with self.subTest(name=name):
-                url = reverse(name, args=(self.id,))
+                url = reverse(name, args=(self.slug,))
                 redirect_url = f'{login_url}?next={url}'
                 response = self.client.get(url)
                 self.assertRedirects(response, redirect_url)
