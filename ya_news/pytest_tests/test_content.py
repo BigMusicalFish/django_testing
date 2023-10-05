@@ -21,6 +21,7 @@ def test_anonymous_client_has_no_form(client, form_data, name, args):
     response = client.post(url, data=form_data)
     assert 'form' not in response.context
 
+
 def test_news_count(author_client):
     url = reverse('news:home')
     response = author_client.get(url)
