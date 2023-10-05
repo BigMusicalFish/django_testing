@@ -30,7 +30,7 @@ def test_anonymous_user_cant_create_comment(client, form_data):
 
 
 def test_author_can_edit_comment(author_client, form_data, comment):
-    url = reverse('notes:edit', args=(comment.id))
+    url = reverse('news:edit', args=(comment.id))
     response = author_client.post(url, form_data)
     assertRedirects(response, reverse('news:detail'))
     comment.refresh_from_db()
@@ -45,9 +45,9 @@ def test_other_user_cant_edit_comment(admin_client, form_data, comment):
     assert comment.text == comment_from_db.text
 
 
-def test_user_cant_use_bad_words(author_client, comment):
+def test_user_cant_use_bad_words(author_client):
     bad_words_data = {'text': f'Какой-то текст, {BAD_WORDS[0]}, еще текст'}
-    response = author_client.post(url, data=bad_words_data)
+    response = author_client.post(data=bad_words_data)
     assertFormError(response, form='form', field='text', errors=WARNING)
     comments_count = Comment.objects.count()
     assert comments_count == 0

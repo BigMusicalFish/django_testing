@@ -71,7 +71,7 @@ class TestNoteEditDelete(TestCase):
             text=cls.NOTE_TEXT
         )
         cls.form_data = {'text': cls.NOTE_TEXT}
-        cls.edit_url = reverse('notes:edit', args=(cls.note.id)) 
+        cls.edit_url = reverse('notes:edit', args=(cls.note.id))
         cls.delete_url = reverse('notes:delete', args=(cls.note.id))
 
     def test_author_can_delete_note(self):
