@@ -36,4 +36,3 @@ def form_data():
     return {
         'text': 'Новый текст',
     }
-
