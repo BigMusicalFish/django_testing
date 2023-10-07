@@ -28,10 +28,9 @@ class TestContent(TestCase):
     def test_notes_list_for_different_users(self):
         notes = ((self.author, True), (self.reader, False))
         url = reverse('notes:list')
-        for user, note_in_list in notes:
+        for user, note_list in notes:
             self.client.force_login(user)
-            with self.subTest(user=user.username, note_in_list=note_in_list):
+            with self.subTest(user=user.username, note_list=note_list):
                 response = self.client.get(url)
-                note_in_object_list = self.note in response.context[
-                    'object_list']
-                self.assertEqual(note_in_object_list, note_in_list)
+                object_list = self.note in response.context['object_list']
+                self.assertEqual(object_list, note_list)

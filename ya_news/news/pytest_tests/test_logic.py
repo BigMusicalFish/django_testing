@@ -42,8 +42,7 @@ def test_user_cant_use_bad_words(admin_client, pk_news):
     response = admin_client.post(url, data=bad_words_data)
     assertFormError(response, form='form', field='text', errors=WARNING)
     comments_count = Comment.objects.count()
-    expected_comments = 0
-    assert comments_count == expected_comments
+    assert comments_count == 0
 
 
 def test_author_can_edit_comment(
@@ -62,8 +61,7 @@ def test_author_can_delete_comment(author_client, pk_news, pk_comment):
     expected_url = reverse('news:detail', args=pk_news) + '#comments'
     assertRedirects(response, expected_url)
     comments_count = Comment.objects.count()
-    expected_comments = 0
-    assert comments_count == expected_comments
+    assert comments_count == 0
 
 
 def test_other_user_cant_edit_comment(admin_client, comment, form_data):
@@ -81,5 +79,4 @@ def test_other_user_cant_delete_comment(
     response = admin_client.post(url)
     assert response.status_code == HTTPStatus.NOT_FOUND
     comments_count = Comment.objects.count()
-    expected_comments = 1
-    assert comments_count == expected_comments
+    assert comments_count == 1

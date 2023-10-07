@@ -26,7 +26,7 @@ def news():
 
 
 @pytest.fixture
-def pk_from_news(news):
+def pk_news(news):
     return news.pk
 
 
@@ -53,7 +53,7 @@ def form_data():
 
 
 @pytest.fixture
-def bulk_news():
+def creat_news():
     News.objects.bulk_create(
         News(title=f'News number {index}',
              text='News text',
@@ -64,7 +64,7 @@ def bulk_news():
 
 
 @pytest.fixture
-def bulk_comments(news, author):
+def creat_comments(news, author):
     now = timezone.now()
     for index in range(11):
         comment = Comment.objects.create(

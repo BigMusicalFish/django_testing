@@ -10,7 +10,7 @@ from pytest_django.asserts import assertRedirects
                                         ('users:logout', None),
                                         ('users:signup', None),
                                         ('news:detail',
-                                         pytest.lazy_fixture('pk_from_news'))))
+                                         pytest.lazy_fixture('pk_news'))))
 @pytest.mark.django_db
 def test_pages_availability_for_anonymous_user(client, page, args):
     url = reverse(page, args=args)
@@ -20,8 +20,8 @@ def test_pages_availability_for_anonymous_user(client, page, args):
 
 @pytest.mark.parametrize(
     'page, args',
-    (('news:edit', pytest.lazy_fixture('pk_from_comment')),
-     ('news:delete', pytest.lazy_fixture('pk_from_comment')),),
+    (('news:edit', pytest.lazy_fixture('pk_comment')),
+     ('news:delete', pytest.lazy_fixture('pk_comment')),),
 )
 def test_pages_availability_for_auth_user(author_client, page, args):
     url = reverse(page, args=args)
@@ -31,8 +31,8 @@ def test_pages_availability_for_auth_user(author_client, page, args):
 
 @pytest.mark.parametrize(
     'page, args',
-    (('news:edit', pytest.lazy_fixture('pk_from_comment')),
-     ('news:delete', pytest.lazy_fixture('pk_from_comment')),),
+    (('news:edit', pytest.lazy_fixture('pk_comment')),
+     ('news:delete', pytest.lazy_fixture('pk_comment')),),
 )
 def test_redirects(client, page, args):
     login_url = reverse('users:login')
@@ -43,9 +43,8 @@ def test_redirects(client, page, args):
 
 
 @pytest.mark.parametrize('page', ('news:edit', 'news:delete'))
-def test_pages_availability_for_different_users(
-        page, pk_from_comment, admin_client
-):
-    url = reverse(page, args=pk_from_comment)
+def test_pages_availability_for_different_users(page, pk_comment,
+                                                admin_client):
+    url = reverse(page, args=pk_comment)
     response = admin_client.get(url)
     assert response.status_code == HTTPStatus.NOT_FOUND
