@@ -29,7 +29,7 @@ class TestRoutes(TestCase):
         for page in urls:
             with self.subTest(page=page):
                 url = reverse(page)
-                response = self.clint.get(url)
+                response = self.client.get(url)
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_pages_availability_for_auth_euser(self):
