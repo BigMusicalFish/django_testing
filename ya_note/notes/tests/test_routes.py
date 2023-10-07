@@ -16,7 +16,7 @@ class TestRoutes(TestCase):
         cls.author = User.objects.create(username='Лев Толстой')
         cls.reader = User.objects.create(username='Читатель простой')
         cls.note = Note.objects.create(title='Заголовок', text='Текст заметки',
-                                       slug='note-slug', author=cls.author)
+                                       slug='note_slug', author=cls.author)
 
     def test_pages_availability_for_anonymous_user(self):
         urls = ('notes:home', 'users:login', 'users:logout', 'users:signup')
@@ -36,10 +36,8 @@ class TestRoutes(TestCase):
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_availability_for_notes_create_edit_and_delete(self):
-        users_statuses = (
-            (self.author, HTTPStatus.OK),
-            (self.reader, HTTPStatus.NOT_FOUND),
-        )
+        users_statuses = ((self.author, HTTPStatus.OK),
+                          (self.reader, HTTPStatus.NOT_FOUND))
         for user, status in users_statuses:
             self.client.force_login(user)
             for page in ('notes:detail', 'notes:edit', 'notes:delete'):
