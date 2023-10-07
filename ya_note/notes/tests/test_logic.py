@@ -25,7 +25,7 @@ class TestNoteEditDelete(TestCase):
         cls.reader = User.objects.create(username='Читатель')
         cls.reader_client = Client()
         cls.reader_client.force_login(cls.reader)
-        cls.note = Note.objects.create(author=cls.author)
+        cls.note = Note.objects.create(author=cls.author, text='Текст заметки')
         cls.edit_note_url = reverse('notes:edit', args=[cls.note.slug])
         cls.delete_note_url = reverse('notes:delete', args=[cls.note.slug])
         cls.form_data = {

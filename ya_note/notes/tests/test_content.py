@@ -13,8 +13,7 @@ class TestContent(TestCase):
     def setUpTestData(cls):
         cls.author = User.objects.create(username='Автор')
         cls.reader = User.objects.create(username='Читатель')
-        cls.note = Note.objects.create(author=cls.author, title='Заголовок',
-                                       text='Текст заметки')
+        cls.note = Note.objects.create(author=cls.author, text='Текст заметки')
 
     def test_pages_contains_form(self):
         urls = (('notes:add', None), ('notes:edit', self.note.slug))
