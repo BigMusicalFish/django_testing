@@ -13,8 +13,8 @@ class TestRoutes(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.author = User.objects.create(username='Лев Толстой')
-        cls.reader = User.objects.create(username='Читатель простой')
+        cls.author = User.objects.create(username='Атор')
+        cls.reader = User.objects.create(username='Читатель')
         cls.note = Note.objects.create(title='Заголовок', text='Текст заметки',
                                        slug='note_slug', author=cls.author)
 
@@ -42,7 +42,7 @@ class TestRoutes(TestCase):
             self.client.force_login(user)
             for page in ('notes:detail', 'notes:edit', 'notes:delete'):
                 with self.subTest(user=user.username, page=page):
-                    url = reverse(page, args=[self.note.slug])
+                    url = reverse(page, args=(self.note.slug))
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, status)
 
