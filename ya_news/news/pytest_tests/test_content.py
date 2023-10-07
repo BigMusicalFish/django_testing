@@ -28,7 +28,7 @@ def test_comments_order(client, pk_news):
         assert as_is.created == to_be.created
 
 
-@pytest.mark.usefixtures('create_comments')
+@pytest.mark.usefixtures('create_news')
 def test_news_count(client):
     url = reverse('news:home')
     res = client.get(url)
