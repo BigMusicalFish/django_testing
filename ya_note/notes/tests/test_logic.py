@@ -26,7 +26,7 @@ class TestNoteEditDelete(TestCase):
         cls.reader_client = Client()
         cls.reader_client.force_login(cls.reader)
         cls.note = Note.objects.create(author=cls.author, title='Заголовок',
-                                       text='Текст заметки', slug='note_slug')
+                                       text='Текст заметки')
         cls.edit_note_url = reverse('notes:edit', args=[cls.note.slug])
         cls.delete_note_url = reverse('notes:delete', args=[cls.note.slug])
         cls.form_data = {
@@ -77,9 +77,7 @@ class TestNoteCreation(TestCase):
         self.assertRedirects(response, reverse('notes:success'))
         expected_notes_count = 1
         current_notes_count = Note.objects.count()
-        self.assertEqual(current_notes_count, expected_notes_count,
-                         self._get_err_msg(current_notes_count,
-                                           expected_notes_count))
+        self.assertEqual(current_notes_count, expected_notes_count)
         new_note = Note.objects.filter(slug=self.form_data['slug']).first()
         self.assertIsNotNone(new_note)
         self.assertEqual(new_note.title, self.form_data['title'])
@@ -94,9 +92,7 @@ class TestNoteCreation(TestCase):
         self.assertRedirects(response, expected_url)
         expected_notes_count = 0
         current_notes_count = Note.objects.count()
-        self.assertEqual(current_notes_count, expected_notes_count,
-                         self._get_err_msg(current_notes_count,
-                                           expected_notes_count))
+        self.assertEqual(current_notes_count, expected_notes_count)
 
     def test_slug_must_be_unique(self):
         self.client.force_login(self.author)
@@ -113,12 +109,8 @@ class TestNoteCreation(TestCase):
         self.assertRedirects(res, reverse('notes:success'))
         expected_notes_count = 1
         current_notes_count = Note.objects.count()
-        self.assertEqual(current_notes_count, expected_notes_count,
-                         self._get_err_msg(current_notes_count,
-                                           expected_notes_count))
+        self.assertEqual(current_notes_count, expected_notes_count)
         expected_slug = slugify(self.form_data['title'])
         new_note = Note.objects.filter(slug=expected_slug).first()
         self.assertIsNotNone(new_note)
-        self.assertEqual(new_note.slug, expected_slug,
-                         self._get_err_msg(new_note.slug,
-                                           expected_slug))
+        self.assertEqual(new_note.slug, expected_slug)
