@@ -21,13 +21,14 @@ def author_client(author, client):
 def news():
     news = News.objects.create(
         title='News Title',
-        text='News Text')
+        text='News Text',
+    )
     return news
 
 
 @pytest.fixture
-def pk_news(news):
-    return news.pk
+def pk_from_news(news):
+    return news.pk,
 
 
 @pytest.fixture
@@ -41,8 +42,8 @@ def comment(author, news):
 
 
 @pytest.fixture
-def pk_comment(comment):
-    return comment.pk
+def pk_from_comment(comment):
+    return comment.pk,
 
 
 @pytest.fixture
@@ -53,7 +54,7 @@ def form_data():
 
 
 @pytest.fixture
-def creat_news():
+def make_bulk_of_news():
     News.objects.bulk_create(
         News(title=f'News number {index}',
              text='News text',
@@ -64,7 +65,7 @@ def creat_news():
 
 
 @pytest.fixture
-def creat_comments(news, author):
+def make_bulk_of_comments(news, author):
     now = timezone.now()
     for index in range(11):
         comment = Comment.objects.create(
