@@ -16,7 +16,7 @@ class TestRoutes(TestCase):
         cls.author = User.objects.create(username='Автор')
         cls.reader = User.objects.create(username='Читатель')
         cls.note = Note.objects.create(author=cls.author, title='Заголовок',
-                                       text='Текст заметки', slug='note-slug')
+                                       text='Текст заметки', slug='note_slug')
 
     def test_home_page(self):
         url = reverse('notes:home')

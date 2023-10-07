@@ -26,7 +26,7 @@ class TestNoteEditDelete(TestCase):
         cls.reader_client = Client()
         cls.reader_client.force_login(cls.reader)
         cls.note = Note.objects.create(author=cls.author, title='Заголовок',
-                                       text='Текст заметки', slug='note-slug')
+                                       text='Текст заметки', slug='note_slug')
         cls.edit_note_url = reverse('notes:edit', args=[cls.note.slug])
         cls.delete_note_url = reverse('notes:delete', args=[cls.note.slug])
         cls.form_data = {
@@ -65,7 +65,7 @@ class TestNoteCreation(TestCase):
     def setUpTestData(cls):
         cls.author = User.objects.create(username='автор')
         cls.form_data = {'title': 'Form title', 'text': 'Form text',
-                         'slug': 'form-slug'}
+                         'slug': 'form_slug'}
 
     @staticmethod
     def _get_err_msg(current, expected):
