@@ -16,10 +16,10 @@ class TestNoteCreation(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.author = User.objects.create(username='Лев Толстой')
+        cls.author = User.objects.create(username='Автор')
         cls.form_data = {'title': 'Form title',
                          'text': 'Form text',
-                         'slug': 'form-slug'}
+                         'slug': 'form_slug'}
 
     def test_user_can_create_note(self):
         self.client.force_login(self.author)
@@ -74,10 +74,10 @@ class TestNoteEditDelete(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.author = User.objects.create(username='Лев Толстой')
+        cls.author = User.objects.create(username='Автор')
         cls.author_client = Client()
         cls.author_client.force_login(cls.author)
-        cls.reader = User.objects.create(username='Читатель простой')
+        cls.reader = User.objects.create(username='Читатель')
         cls.reader_client = Client()
         cls.reader_client.force_login(cls.reader)
         cls.note = Note.objects.create(title=cls.NOTE_TITLE,

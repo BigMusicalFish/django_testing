@@ -11,14 +11,10 @@ class TestContent(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.author = User.objects.create(username='Лев Толстой')
-        cls.reader = User.objects.create(username='Читатель простой')
-        cls.note = Note.objects.create(
-            title='Заголовок',
-            text='Текст заметки',
-            slug='note-slug',
-            author=cls.author,
-        )
+        cls.author = User.objects.create(username='Автор')
+        cls.reader = User.objects.create(username='Читатель')
+        cls.note = Note.objects.create(title='Заголовок', text='Текст заметки',
+                                       slug='note_slug', author=cls.author)
 
     def test_notes_list_for_different_users(self):
         users_notes = ((self.author, True), (self.reader, False))
