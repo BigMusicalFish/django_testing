@@ -11,8 +11,8 @@ def test_news_order(client):
     res = client.get(url)
     object_list = res.context['object_list']
     sorted_news = sorted(object_list,
-                                 key=lambda news: news.date,
-                                 reverse=True)
+                         key=lambda news: news.date,
+                         reverse=True)
     for as_is, to_be in zip(object_list, sorted_news):
         assert as_is.date == to_be.date
 
@@ -23,9 +23,10 @@ def test_comments_order(client, pk_news):
     res = client.get(url)
     object_list = res.context['news'].comment_set.all()
     sorted_comments = sorted(object_list,
-                                     key=lambda comment: comment.created)
+                             key=lambda comment: comment.created)
     for as_is, to_be in zip(object_list, sorted_comments):
         assert as_is.created == to_be.created
+
 
 @pytest.mark.usefixtures('create_comments')
 def test_news_count(client):
@@ -45,4 +46,3 @@ def test_comment_form_availability_for_different_users(
     res = username.get(url)
     result = 'form' in res.context
     assert result == is_permitted
-
