@@ -50,9 +50,10 @@ class TestRoutes(TestCase):
 
     def test_redirect_for_anonymous_client(self):
         login_url = reverse('users:login')
-        urls = (('notes:list', None), ('notes:success', None), ('notes:add', None),
-                ('notes:detail', (self.note.slug,)),('notes:edit', (self.note.slug,)),
-                ('notes:delete', (self.note.slug,)))
+        urls = (('notes:list', None), ('notes:success', None),
+                ('notes:add', None), ('notes:detail', (self.note.slug)),
+                ('notes:edit', (self.note.slug)),
+                ('notes:delete', (self.note.slug)))
         for page, args in urls:
             with self.subTest(page=page):
                 url = reverse(page, args=args)

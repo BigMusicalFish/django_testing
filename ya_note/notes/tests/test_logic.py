@@ -20,7 +20,7 @@ class TestNoteCreation(TestCase):
         cls.form_data = {'title': 'Form title',
                          'text': 'Form text',
                          'slug': 'form-slug'}
-        
+
     def test_user_can_create_note(self):
         self.client.force_login(self.author)
         response = self.client.post(self.ADD_NOTE_URL, data=self.form_data)
@@ -86,7 +86,8 @@ class TestNoteEditDelete(TestCase):
                                        author=cls.author)
         cls.edit_note_url = reverse('notes:edit', args=[cls.note.slug])
         cls.delete_note_url = reverse('notes:delete', args=[cls.note.slug])
-        cls.form_data = {'title': cls.NEW_NOTE_TITLE,'text': cls.NEW_NOTE_TEXT}
+        cls.form_data = {'title': cls.NEW_NOTE_TITLE,
+                         'text': cls.NEW_NOTE_TEXT}
 
     def test_author_can_edit_note(self):
         self.author_client.post(self.edit_note_url, self.form_data)
