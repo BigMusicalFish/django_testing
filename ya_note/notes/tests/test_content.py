@@ -8,6 +8,7 @@ User = get_user_model()
 
 
 class TestContent(TestCase):
+    '''Тестирует контент'''
 
     @classmethod
     def setUpTestData(cls):
@@ -17,6 +18,8 @@ class TestContent(TestCase):
                                        slug='note_slug', author=cls.author)
 
     def test_notes_list_for_different_users(self):
+        '''Отдельная заметка передается в 
+        список заметок на страницу пользователя'''
         users_notes = ((self.author, True), (self.reader, False))
         url = reverse('notes:list')
         for user, note_in_list in users_notes:
@@ -28,6 +31,7 @@ class TestContent(TestCase):
                 self.assertEqual(note_in_object_list, note_in_list)
 
     def test_pages_contains_form(self):
+        '''На страницы создания и редактирования заметки передаются формы'''
         urls = (('notes:add', None), ('notes:edit', (self.note.slug,)))
         for page, args in urls:
             with self.subTest(page=page):

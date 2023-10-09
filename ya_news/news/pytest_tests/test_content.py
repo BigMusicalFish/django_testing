@@ -7,6 +7,8 @@ pytestmark = pytest.mark.django_db
 
 @pytest.mark.usefixtures('create_news')
 def test_news_order(client):
+    '''новости отсортированы по дате,
+    новые в начале, старые в конце списка'''
     url = reverse('news:home')
     res = client.get(url)
     object_list = res.context['object_list']
@@ -19,6 +21,8 @@ def test_news_order(client):
 
 @pytest.mark.usefixtures('create_comments')
 def test_comments_order(client, pk_news):
+    '''комментарии отсортированы по дате,
+    старые в начале, новые в конце списка'''
     url = reverse('news:detail', args=pk_news)
     res = client.get(url)
     object_list = res.context['news'].comment_set.all()
@@ -30,6 +34,7 @@ def test_comments_order(client, pk_news):
 
 @pytest.mark.usefixtures('create_news')
 def test_news_count(client):
+    '''На главной странице не более 10 новостей'''
     url = reverse('news:home')
     res = client.get(url)
     object_list = res.context['object_list']
@@ -42,6 +47,8 @@ def test_news_count(client):
                           (pytest.lazy_fixture('client'), False)))
 def test_comment_form_availability_for_different_users(
         pk_news, username, is_permitted):
+    '''анонимному пользователю недоступна форма
+    отправки комментрия, зарегистрированному доступна'''
     url = reverse('news:detail', args=pk_news)
     res = username.get(url)
     result = 'form' in res.context

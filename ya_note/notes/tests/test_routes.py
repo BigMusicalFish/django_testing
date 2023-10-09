@@ -10,6 +10,7 @@ User = get_user_model()
 
 
 class TestRoutes(TestCase):
+    '''Тестирует пути'''
 
     @classmethod
     def setUpTestData(cls):
@@ -23,6 +24,8 @@ class TestRoutes(TestCase):
         )
 
     def test_pages_availability_for_anonymous_user(self):
+        '''Главная страница, страницы регистрации, входа и
+        выхода из учетной записи доступны анонимному пользователю'''
         urls = (
             'notes:home',
             'users:login',
@@ -36,6 +39,8 @@ class TestRoutes(TestCase):
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_pages_availability_for_auth_user(self):
+        '''Страницы со списком заметок, успешного добавления заметки
+        и добавления новой заметки доступна зарегистрированному пользователю'''
         urls = (
             'notes:list',
             'notes:success',
@@ -49,6 +54,8 @@ class TestRoutes(TestCase):
                 self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_availability_for_notes_create_edit_and_delete(self):
+        '''Страницы отдельной заметки, редактирования
+        и удаления заметки доступны автору заметки'''
         users_statuses = (
             (self.author, HTTPStatus.OK),
             (self.reader, HTTPStatus.NOT_FOUND),
@@ -62,6 +69,10 @@ class TestRoutes(TestCase):
                     self.assertEqual(response.status_code, status)
 
     def test_redirect_for_anonymous_client(self):
+        '''При переходе на страницу заметок, страницы успешного
+        добавления записи, добавления заметки, отдельной заметки,
+        редактирования или удаления заметки аноним перенаправляется
+        на страницу авторизации'''
         login_url = reverse('users:login')
         urls = (
             ('notes:list', None),
