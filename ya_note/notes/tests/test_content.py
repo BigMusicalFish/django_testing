@@ -18,7 +18,7 @@ class TestContent(TestCase):
                                        slug='note_slug', author=cls.author)
 
     def test_notes_list_for_different_users(self):
-        '''Отдельная заметка передается в 
+        '''Отдельная заметка передается в
         список заметок на страницу пользователя'''
         users_notes = ((self.author, True), (self.reader, False))
         url = reverse('notes:list')
